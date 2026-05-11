@@ -1126,6 +1126,7 @@ If the message is not a meeting prep request, do nothing.</pre>
 
     <div class="form-inner">
       <form id="contact-form" action="https://formspree.io/f/xdabyoyr" method="POST">
+        <input type="hidden" name="_subject" value="Second Brain — new submission">
         <div class="field">
           <label>Your name</label>
           <input type="text" name="name" placeholder="First and last name" required>
@@ -1205,24 +1206,11 @@ If the message is not a meeting prep request, do nothing.</pre>
   // FORM
   const form = document.getElementById('contact-form');
   if (form) {
-    form.addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const data = new FormData(form);
-      try {
-        const response = await fetch('https://formspree.io/f/xdabyoyr', {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-        if (response.ok) {
-          form.style.display = 'none';
-          document.getElementById('form-success').style.display = 'block';
-        } else {
-          alert('Something went wrong. Please try again.');
-        }
-      } catch {
-        alert('Something went wrong. Please try again.');
-      }
+    form.addEventListener('submit', function() {
+      setTimeout(function() {
+        form.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      }, 1000);
     });
   }
 </script>
