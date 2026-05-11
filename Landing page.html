@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Second Brain — Start Here</title>
+
+<style>
+  :root {
+    --ink: #1a1814;
+    --paper: #faf8f5;
+    --accent: #c96442;
+    --muted: #7a756e;
+    --rule: #e8e2d9;
+    --code-bg: #1a1a1a;
+    --code-text: #e8e4dc;
+    --highlight: #f2ede6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-left {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--rule);
+  }
+
+  .hero-right {
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .eyebrow {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+
+    color: var(--muted);
+    margin-bottom: 60px;
+  }
+
+  .hero-left .eyebrow { color: var(--muted); }
+  .hero-right .eyebrow { color: rgba(245,242,237,0.4); }
+
+  h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: 1.0;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-left h1 { color: var(--ink); }
+
+  .hero-tagline {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(20px, 2.5vw, 32px);
+    font-style: italic;
+    line-height: 1.3;
+    color: rgba(245,242,237,0.7);
+    margin-bottom: 48px;
+  }
+
+  .hero-stat {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(245,242,237,0.3);
+
+    border-top: 1px solid rgba(245,242,237,0.1);
+    padding-top: 24px;
+  }
+
+  .accent-word { color: var(--accent); }
+
+  /* NAV DOTS */
+  .nav-dots {
+    position: fixed;
+    right: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 100;
+  }
+
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rule);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .nav-dot.active { background: var(--accent); transform: scale(1.5); }
+
+  /* SECTIONS */
+  section {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  section.visible { opacity: 1; transform: translateY(0); }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .section-label {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+
+    color: var(--accent);
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    max-width: 80px;
+  }
+
+  h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .lead {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 64px;
+    line-height: 1.7;
+  }
+
+  /* THE QUESTION */
+  .question-block {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .question-block.visible { opacity: 1; transform: translateY(0); }
+
+  .question-block::before {
+    content: '"';
+    position: absolute;
+    top: -40px;
+    left: 40px;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 400px;
+    color: rgba(255,255,255,0.03);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .question-text {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-style: italic;
+    line-height: 1.3;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .question-caption {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+
+    color: rgba(245,242,237,0.3);
+    text-align: center;
+    margin-top: 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* STEPS */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .step {
+    padding: 48px 40px;
+    border-right: 1px solid var(--rule);
+    position: relative;
+    transition: background 0.3s ease;
+  }
+
+  .step:last-child { border-right: none; }
+  .step:hover { background: var(--highlight); }
+
+  .step-number {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .step h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .step p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .step-duration {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    letter-spacing: 0.08em;
+  }
+
+  /* CONTEXT FILES */
+  .files-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--rule);
+  }
+
+  .file-card {
+    background: var(--paper);
+    padding: 48px 40px;
+    transition: background 0.3s ease;
+  }
+
+  .file-card:hover { background: var(--highlight); }
+
+  .file-icon {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .file-card h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  .file-card p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .questions-list {
+    list-style: none;
+    border-left: 2px solid var(--rule);
+    padding-left: 20px;
+  }
+
+  .questions-list li {
+    font-size: 16px;
+    color: var(--muted);
+    padding: 11px 0;
+    border-bottom: 1px solid var(--rule);
+    line-height: 1.7;
+  }
+
+  .questions-list li:last-child { border-bottom: none; }
+
+  .questions-list li.highlight-q {
+    color: var(--ink);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  /* HOOKS */
+  .hooks-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hook-card {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 40px 48px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .hook-card:hover { background: #222; }
+
+  .hook-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .hook-trigger {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .hook-number {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    color: rgba(232,228,220,0.2);
+    letter-spacing: 0.12em;
+  }
+
+  .hook-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--paper);
+  }
+
+  .hook-desc {
+    font-size: 15px;
+    color: rgba(232,228,220,0.6);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .hook-code {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 20px 24px;
+    display: none;
+  }
+
+  .hook-code.expanded { display: block; }
+
+  .hook-code pre {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 12px;
+    color: rgba(232,228,220,0.7);
+    white-space: pre-wrap;
+    line-height: 1.7;
+  }
+
+  .hook-toggle {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+
+    color: var(--accent);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+  }
+
+  .hook-toggle:hover { opacity: 0.7; }
+
+  .hook-what {
+    font-size: 15px;
+    color: rgba(232,228,220,0.5);
+    line-height: 1.7;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 20px;
+    font-style: italic;
+  }
+
+  /* TOOLS */
+  .tools-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+
+  .tool-card {
+    padding: 40px 32px;
+    border-right: 1px solid var(--rule);
+  }
+
+  .tool-card:last-child { border-right: none; }
+
+  .tool-name {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .tool-role {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .tool-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .tool-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* SETUP */
+  .setup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--rule);
+  }
+
+  .setup-card {
+    background: var(--paper);
+    padding: 48px 40px;
+  }
+
+  .setup-card h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+
+  .setup-steps {
+    list-style: none;
+    counter-reset: setup-counter;
+  }
+
+  .setup-steps li {
+    counter-increment: setup-counter;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 16px;
+    color: var(--muted);
+    display: flex;
+    gap: 16px;
+    line-height: 1.7;
+  }
+
+  .setup-steps li:last-child { border-bottom: none; }
+
+  .setup-steps li::before {
+    content: counter(setup-counter, decimal-leading-zero);
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    min-width: 24px;
+    padding-top: 2px;
+  }
+
+  .setup-warning {
+    background: var(--highlight);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* FORM */
+  .form-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 120px 0;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .form-section.visible { opacity: 1; transform: translateY(0); }
+
+  .form-section .section-label { color: rgba(245,242,237,0.3); }
+  .form-section .section-label::after { background: rgba(245,242,237,0.1); }
+
+  .form-section h2 { color: var(--paper); }
+
+  .form-section .lead { color: rgba(245,242,237,0.5); }
+
+  .form-inner {
+    max-width: 560px;
+  }
+
+  .field {
+    margin-bottom: 24px;
+  }
+
+  .field label {
+    display: block;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+
+    color: rgba(245,242,237,0.4);
+    margin-bottom: 10px;
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--paper);
+    font-family: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+    font-size: 16px;
+    font-weight: 300;
+    padding: 16px 20px;
+    outline: none;
+    transition: border-color 0.2s;
+    border-radius: 2px;
+  }
+
+  .field input:focus,
+  .field textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .field textarea {
+    height: 120px;
+    resize: vertical;
+  }
+
+  .submit-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+
+    cursor: pointer;
+    transition: opacity 0.2s;
+    border-radius: 2px;
+  }
+
+  .submit-btn:hover { opacity: 0.85; }
+
+  .form-success {
+    display: none;
+    background: rgba(200,64,26,0.1);
+    border: 1px solid rgba(200,64,26,0.3);
+    padding: 24px 28px;
+    border-radius: 2px;
+  }
+
+  .form-success p {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--paper);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+  }
+
+  .footer-note {
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-left > * { animation: fadeUp 0.8s ease forwards; }
+  .hero-left > *:nth-child(1) { animation-delay: 0.1s; opacity: 0; }
+  .hero-left > *:nth-child(2) { animation-delay: 0.3s; opacity: 0; }
+  .hero-left > *:nth-child(3) { animation-delay: 0.5s; opacity: 0; }
+  .hero-right > * { animation: fadeUp 0.8s ease forwards; }
+  .hero-right > *:nth-child(1) { animation-delay: 0.2s; opacity: 0; }
+  .hero-right > *:nth-child(2) { animation-delay: 0.4s; opacity: 0; }
+  .hero-right > *:nth-child(3) { animation-delay: 0.6s; opacity: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 60px 32px; }
+    .hero-right { padding: 60px 32px; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid var(--rule); }
+    .files-layout { grid-template-columns: 1fr; }
+    .tools-row { grid-template-columns: 1fr 1fr; }
+    .setup-grid { grid-template-columns: 1fr; }
+    .container { padding: 0 32px; }
+    .nav-dots { display: none; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav class="nav-dots" aria-label="Page sections">
+  <button class="nav-dot active" onclick="scrollToSection(0)" aria-label="Top"></button>
+  <button class="nav-dot" onclick="scrollToSection(1)" aria-label="Start"></button>
+  <button class="nav-dot" onclick="scrollToSection(2)" aria-label="Context files"></button>
+  <button class="nav-dot" onclick="scrollToSection(3)" aria-label="Hooks"></button>
+  <button class="nav-dot" onclick="scrollToSection(4)" aria-label="Setup"></button>
+  <button class="nav-dot" onclick="scrollToSection(5)" aria-label="Share"></button>
+  <button class="nav-dot" onclick="scrollToSection(6)" aria-label="Form"></button>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="section-0">
+  <div class="hero-left">
+    <div class="eyebrow">Second Brain — Field Guide</div>
+    <h1>Clarity is the<br><span class="accent-word">scarcest</span><br>resource<br>in your job</h1>
+    <div class="eyebrow">Everything you need to build yours — start here.</div>
+  </div>
+  <div class="hero-right">
+    <div class="eyebrow">The promise</div>
+    <p class="hero-tagline">The leaders who win aren't the ones with the best instincts.<br>They're the ones whose instincts are best informed.</p>
+    <div class="hero-stat">Three hours · Three documents · One system that compounds daily</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="section-1">
+  <div class="container">
+    <div class="section-label">Where to start</div>
+    <h2>Three steps<br>In this order</h2>
+    <p class="lead">The system is only as good as what you put into it. Start with the context files. Everything else runs on top of them.</p>
+
+    <div class="steps-grid">
+      <div class="step">
+        <span class="step-number">01</span>
+        <h3>Build your context files</h3>
+        <p>Three documents that tell the system who you are, how you work, and how you think. Without them, you have a generic AI assistant. With them, you have something that sounds like you and thinks about your actual situation.</p>
+        <div class="step-duration">~3 hours total · Do this first</div>
+      </div>
+      <div class="step">
+        <span class="step-number">02</span>
+        <h3>Install your tools</h3>
+        <p>Quick Desktop is where most of you will start — it's straightforward and connects to your existing tools. Kiro is the alternative for those who want to go deeper. Instructions for both are below.</p>
+        <div class="step-duration">~30 min · Quick Desktop recommended</div>
+      </div>
+      <div class="step">
+        <span class="step-number">03</span>
+        <h3>Install your hooks</h3>
+        <p>Hooks are triggers that fire automatically. Three are ready to copy below — morning briefing, rep coaching prep, and executive meeting prep. Start with one. The morning briefing is the one that changes your day fastest.</p>
+        <div class="step-duration">~15 min · Copy and paste ready</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXT FILES -->
+<section>
+  <div class="container">
+    <div class="section-label">Step 01 — Context files</div>
+    <h2>Teaching the system<br>who you are</h2>
+    <p class="lead">Open any LLM. Paste the prompt for each file. Answer honestly. Save the output. These three documents become the foundation everything else runs on.</p>
+  </div>
+
+  <div class="files-layout">
+
+    <div class="file-card">
+      <div class="file-icon">personal-constitution.md · Start here</div>
+      <h3>Your Personal Constitution</h3>
+      <p>Your core values, beliefs, and principles. The system uses this to understand what you stand for, how you make decisions, and what matters to you when the answer isn't obvious. This is the one that takes you somewhere you didn't expect.</p>
+      <p><strong>Paste this prompt into your AI assistant:</strong></p>
+      <ul class="questions-list">
+        <li>I want you to help me articulate my Personal Constitution. Interview me with probing questions to uncover my core values, beliefs, and principles. Go beyond surface-level. Challenge me if my answers seem vague. Cover the areas below one at a time. After our conversation, produce a Personal Constitution document I can save.</li>
+        <li>The 3–5 values I would fight for even when inconvenient</li>
+        <li>What I believe about how the world works</li>
+        <li>My non-negotiables in how I treat people</li>
+        <li>What parts of my identity I am most proud of</li>
+        <li class="highlight-q">What tensions exist between my stated values and my actual behavior</li>
+      </ul>
+      <div class="step-duration" style="margin-top:24px; padding-top:16px; border-top:1px solid var(--rule); font-family:'DM Mono',monospace; font-size:11px; color:var(--muted);">30–45 min · Save as personal-constitution.md</div>
+    </div>
+
+    <div class="file-card">
+      <div class="file-icon">org-context.md</div>
+      <h3>Your Org Context</h3>
+      <p>A foundational reference that gives the system deep understanding of your org, your number, and the environment you operate in. The more specific you are, the sharper every output becomes.</p>
+      <p><strong>Paste this prompt into your AI assistant:</strong></p>
+      <ul class="questions-list">
+        <li>I want you to develop a deep understanding of my role, my org, and the environment I operate in. Interview me like a trusted advisor who needs to understand my world before helping me navigate it. Ask follow-up questions. Push for specifics. After our conversation, produce an Org Context Document I can save and load as persistent context.</li>
+        <li><strong>My Role:</strong> What is my title and what do I actually own? What decisions are mine to make vs. what requires escalation? Who do I report to and what do they care about most?</li>
+        <li><strong>My Org:</strong> How large is my team and how is it structured? Who are my direct reports and what are their strengths and gaps? Where is the org healthy and where is it fragile?</li>
+        <li><strong>My Number:</strong> What is my current quota and where am I tracking? What's in my pipeline and what's at risk? What deals keep me up at night and why?</li>
+        <li><strong>What I Spend My Time On:</strong> Where does my time actually go vs. where it should go? What pulls me into the weeds? What would I stop doing if I could?</li>
+        <li><strong>My Stakeholders:</strong> Who are the key people I need to influence, align with, or deliver for? What does each of them need from me? Where do I have strong relationships and where are there gaps? What does success look like to the people above me?</li>
+        <li><strong>What's Working & What Isn't:</strong> What are my top wins from the last two quarters? What is the hardest problem in my org right now? What am I avoiding that I know I need to address?</li>
+        <li><strong>Where I Want to Go:</strong> What does my org look like in 18 months if everything goes right? What would I need to be true to get promoted or expand my scope? What do I want from this role that I haven't said out loud?</li>
+        <li class="highlight-q"><strong>The Honest Stuff:</strong> Where am I the bottleneck in my own org? What am I most afraid of as a leader? What would my best direct report say is my biggest blind spot?</li>
+      </ul>
+      <div class="step-duration" style="margin-top:24px; padding-top:16px; border-top:1px solid var(--rule); font-family:'Courier New',monospace; font-size:11px; color:var(--muted);">45–60 min · Save as org-context.md</div>
+    </div>
+
+    <div class="file-card" style="grid-column: 1 / -1;">
+      <div class="file-icon">writer-profile.json</div>
+      <h3>Your Writer Profile</h3>
+      <p style="max-width:640px;">How you write: your sentence structure, vocabulary, punctuation habits, and the patterns you never use. This is what makes AI output sound like you, not like a generic assistant. Build the profile first, then use the editing checklist below every time you review AI-drafted content.</p>
+
+      <p style="margin-top:24px;"><strong>Step 1 — Build your profile</strong></p>
+      <p style="max-width:640px; margin-bottom:12px;">Paste this prompt + 2–3 of your own emails or messages into any LLM:</p>
+      <ul class="questions-list" style="max-width:640px;">
+        <li>Analyze my writing samples and extract my voice profile. Cover the areas below. Produce a writer-profile.json file I can save and load as persistent context.</li>
+        <li>Average sentence length in email vs. formal docs</li>
+        <li>How I open and close messages</li>
+        <li>Vocabulary I use repeatedly and words I never use</li>
+        <li>Whether I use dashes, ellipses, or neither</li>
+        <li class="highlight-q">What my writing does in email vs. formal documents that is different</li>
+      </ul>
+
+      <p style="margin-top:40px;"><strong>Step 2 — Remove the AI tells</strong></p>
+      <p style="max-width:640px; margin-bottom:24px;">AI-generated text has recognizable patterns. Readers are getting better at spotting them. Run every AI draft through this checklist before you send it.</p>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--rule); margin-bottom:2px;">
+
+        <div style="background:var(--paper); padding:28px 32px;">
+          <div style="font-family:'Courier New',monospace; font-size:11px; color:var(--accent); margin-bottom:12px; letter-spacing:0.08em;">Words to cut on sight</div>
+          <ul class="questions-list">
+            <li><strong>Significance inflation:</strong> pivotal, transformative, groundbreaking, testament to, underscores, highlights the importance of. Replace with the plain version.</li>
+            <li><strong>Copula avoidance:</strong> "serves as," "stands as," "functions as," "acts as." If "is" works, use "is."</li>
+            <li><strong>Promotional adjectives:</strong> vibrant, seamless, robust, cutting-edge, world-class. Replace with something specific. "Onboarding takes 3 days" beats "seamless onboarding experience."</li>
+            <li><strong>Filler phrases:</strong> "in order to" → "to." "It's important to note that" → just state it. "At the end of the day" → cut. "It's worth mentioning that" → just mention it.</li>
+            <li><strong>Vague attributions:</strong> "experts say," "research suggests," "many leaders believe." Name the source or drop it. State the claim directly.</li>
+          </ul>
+        </div>
+
+        <div style="background:var(--paper); padding:28px 32px;">
+          <div style="font-family:'Courier New',monospace; font-size:11px; color:var(--accent); margin-bottom:12px; letter-spacing:0.08em;">Patterns to rewrite</div>
+          <ul class="questions-list">
+            <li><strong>Em dash overuse:</strong> one or two per piece is fine. Five or more is a tell. Read aloud — if it sounds choppy and mechanical, rewrite with commas or periods.</li>
+            <li><strong>Forced triads:</strong> AI groups everything into threes. If there are two things, say two. If there are four, say four.</li>
+            <li><strong>Negative parallelisms:</strong> "It's not just X, it's Y." State what the thing is. "Our data is a compounding asset" beats "Our data isn't just a resource, it's a compounding asset."</li>
+            <li><strong>The summary close:</strong> AI ends by restating everything the piece said. If the reader made it to the end, they read it. End with something new or the sharpest line.</li>
+            <li><strong>Mechanical transitions:</strong> "Furthermore," "moreover," "additionally," "building on this point." The next sentence should follow from the previous one. If it doesn't, the transition word won't fix it.</li>
+          </ul>
+        </div>
+
+        <div style="background:var(--paper); padding:28px 32px; grid-column: 1 / -1;">
+          <div style="font-family:'Courier New',monospace; font-size:11px; color:var(--accent); margin-bottom:12px; letter-spacing:0.08em;">The deeper tells</div>
+          <ul class="questions-list" style="max-width:640px;">
+            <li><strong>The hedge stack:</strong> "may potentially," "could arguably," "tends to generally." Pick a position and state it. If you believe it, commit.</li>
+            <li><strong>Performative vulnerability:</strong> "I'll be honest," "if I'm being transparent," "I have to admit." These signal that everything else wasn't honest. Just say the thing.</li>
+            <li><strong>Emotional stage directions:</strong> "I'm genuinely excited about," "I'm deeply passionate about." These tell the reader what to feel. State what happened. Let them decide.</li>
+            <li><strong>Signposting:</strong> "Let's dive in," "let's explore," "here's what you need to know." Just start.</li>
+            <li class="highlight-q"><strong>The test:</strong> show the piece to someone who knows your writing. Ask: "does this sound like me?" If they hesitate, do another pass.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="setup-warning" style="margin-top:0;">
+        AI is a drafting tool, not a writing tool. The draft gets you to 60%. The editing gets you to 100%. The editing is where your voice, your judgment, and your credibility enter the piece.
+      </div>
+
+      <div class="step-duration" style="margin-top:24px; padding-top:16px; border-top:1px solid var(--rule); font-family:'Courier New',monospace; font-size:11px; color:var(--muted);">20–30 min to build · Use the checklist every time</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STEERING FILE -->
+<section>
+  <div class="container">
+    <div class="section-label">Step 01b — Steering file</div>
+    <h2>Teaching the system<br>how to behave</h2>
+    <p class="lead">Context files tell the system who you are. The steering file tells it how to act on that. Without it, you have a well-informed generic assistant. With it, you have something that operates like a chief of staff.</p>
+
+    <div class="steps-grid" style="grid-template-columns: 1fr 1fr;">
+      <div class="step">
+        <span class="step-number">What goes in it</span>
+        <h3>Five sections</h3>
+        <ul class="questions-list" style="margin-top:16px;">
+          <li><strong>Communication rules:</strong> How you want it to respond. Direct, point-first, no preamble, no hedging. Your register, not a generic assistant's.</li>
+          <li><strong>Context application rules:</strong> When to use which file. Org context for strategic work. Writer profile for any written output. Personal constitution for decisions with values dimensions.</li>
+          <li><strong>Escalation rules:</strong> What it should flag to you rather than resolve itself. Politically sensitive topics, decisions above your level, anything involving named direct reports.</li>
+          <li><strong>Output format rules:</strong> Default to prose, not bullets. No bold for emphasis. No filler transitions. Match your writer profile.</li>
+          <li><strong>Hard stops:</strong> What it should never do without your explicit input first.</li>
+        </ul>
+      </div>
+      <div class="step" style="border-right:none;">
+        <span class="step-number">The template</span>
+        <h3>Copy and customize</h3>
+        <p>Create a file called <code style="font-family:'DM Mono',monospace; font-size:13px; background:var(--highlight); padding:2px 6px;">steering.md</code> in Kiro or Quick Desktop. Paste the base template below. Edit the sections marked CUSTOMIZE before you start using it.</p>
+        <div style="background:var(--code-bg); color:var(--code-text); padding:24px; margin-top:24px; border-radius:2px;">
+          <pre style="font-family:'DM Mono',monospace; font-size:12px; line-height:1.8; white-space:pre-wrap; color:rgba(232,228,220,0.8);"># Steering File
+
+## Who I Am
+I am a senior sales leader at AWS. I run a large org
+with significant quota responsibility. I operate in a
+matrixed environment with high political complexity.
+My time is predominantly meetings. My solo work
+happens in short, focused bursts.
+[CUSTOMIZE: add your org size, your number, the VP
+you report to, and what they care about most]
+
+## Communication Rules
+Default to my email register: direct, point-first,
+no preamble, ends with a concrete ask or next step.
+Never use hyperbole or filler transitions.
+Never hedge. Use active verbs.
+Write like a senior AWS leader, not a consultant.
+[CUSTOMIZE: load your writer-profile and add
+2 rules specific to how you write]
+
+## Context Application Rules
+Strategic work and org decisions: pull from
+org-context.md first.
+Any written output: apply writer-profile.json.
+Decisions with values or ethics dimensions:
+apply personal-constitution.md.
+Meeting notes: save to Obsidian with date and
+meeting name. Flag decisions and commitments
+at the top.
+
+## Hard Stops
+Never send any communication without showing me
+the draft first and receiving explicit confirmation.
+Never fabricate org details, pipeline data, or
+leadership dynamics. If information is missing,
+ask me rather than filling the gap.
+[CUSTOMIZE: add at least two hard stops specific
+to your role]</pre>
+        </div>
+        <div class="step-duration" style="margin-top:16px;">200–400 words is the right length · Start with the defaults · Refine based on what it gets wrong</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS & SETUP -->
+<section id="section-4">
+  <div class="container">
+    <div class="section-label">Step 02 — Tools</div>
+    <h2>The stack<br>In plain language</h2>
+    <p class="lead">Two tools do most of the work. Start with Quick Desktop — it's the fastest path to a working system.</p>
+
+    <div class="tools-row">
+      <div class="tool-card">
+        <div class="tool-role">Intelligence layer</div>
+        <div class="tool-name">Quick Desktop</div>
+        <p class="tool-desc">Where you talk to the system. Reads your context files. Connects to your tools. Start here.</p>
+        <p class="tool-note">Recommended for most users</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-role">Intelligence layer (alternative)</div>
+        <div class="tool-name">Kiro</div>
+        <p class="tool-desc">More powerful. Supports hooks natively. Better for those who want to go deeper. kiro.dev</p>
+        <p class="tool-note">For the more technically inclined</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-role">Memory layer</div>
+        <div class="tool-name">Obsidian</div>
+        <p class="tool-desc">Where everything lives. Every briefing, meeting note, and context file. Gets smarter every day. obsidian.md</p>
+        <p class="tool-note">Free · Local · Your data stays yours</p>
+      </div>
+      <div class="tool-card">
+        <div class="tool-role">Capture layer</div>
+        <div class="tool-name">Obsidian Clipper</div>
+        <p class="tool-desc">Browser extension. Save any article or page directly into your vault in two clicks. obsidian.md/clipper</p>
+        <p class="tool-note">2 min to install · You'll use it constantly</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top:64px;">
+    <div class="setup-grid">
+      <div class="setup-card">
+        <h3>Quick Desktop setup</h3>
+        <ol class="setup-steps">
+          <li>Download and install Quick Desktop from <a href="https://aws-quick-work.harmony.a2z.com/" style="color:var(--accent);">aws-quick-work.harmony.a2z.com</a></li>
+          <li>Open Quick Desktop and sign in with your work credentials</li>
+          <li>Go to Settings → Integrations and connect your email (Outlook)</li>
+          <li>Connect your calendar</li>
+          <li>Connect Teams</li>
+          <li>Load your three context files: drag and drop them into the context panel or paste the contents directly</li>
+          <li>Test it: ask "what's on my calendar today?" — if it knows, you're connected</li>
+        </ol>
+        <div class="setup-warning">
+          Quick Desktop is the recommended starting point. If you hit a blocker at any step, use the feedback form at the bottom of this page.
+        </div>
+      </div>
+
+      <div class="setup-card">
+        <h3>Kiro setup (alternative)</h3>
+        <ol class="setup-steps">
+          <li>Download and install Kiro from <a href="https://kiro.dev" style="color:var(--accent);">kiro.dev</a></li>
+          <li>Configure MCP connector: email (Outlook) — 10 min</li>
+          <li>Configure MCP connector: calendar — 5 min</li>
+          <li>Configure MCP connector: Slack — 5 min (note: Slack MCP on Windows can be complex — allow extra time)</li>
+          <li>Run one test prompt: ask Kiro to summarize your last 5 emails</li>
+          <li>Load your context files from your Obsidian vault</li>
+          <li>Install your hooks under Settings → Hooks using the code above</li>
+        </ol>
+        <div class="setup-warning">
+          Windows users: the Slack MCP connector takes longer. Plan for 45 minutes total. If you hit a blocker, use Quick Desktop instead.
+        </div>
+      </div>
+
+      <div class="setup-card" style="grid-column: 1 / -1;">
+        <h3>Obsidian setup</h3>
+        <ol class="setup-steps">
+          <li>Download and install Obsidian from <a href="https://obsidian.md/download" style="color:var(--accent);">obsidian.md/download</a> — available for macOS, Windows, and Linux</li>
+          <li>Create your vault inside your personal OneDrive folder for automatic backup and cross-device access</li>
+          <li>Mac path: <code style="font-family:'Courier New',monospace; font-size:12px; background:var(--highlight); padding:2px 6px;">~/Library/CloudStorage/OneDrive-amazon.com/Obsidian/[your-alias]/</code></li>
+          <li>Windows: adjust the path to your OneDrive sync location accordingly</li>
+          <li>Name the vault whatever you want. Do not create any folders inside it yet — your AI tool will build the structure for you</li>
+        </ol>
+        <div class="setup-warning" style="margin-top:24px;">
+          <strong>Optional: Amazon Plugin Marketplace for Obsidian</strong><br><br>
+          1. Run <code style="font-family:'Courier New',monospace; font-size:12px;">mwinit -o</code> in your terminal (Midway authentication required)<br>
+          2. Download the plugin.zip from Code Browser<br>
+          3. Unzip into your vault's plugins directory:<br>
+          <code style="font-family:'Courier New',monospace; font-size:12px; display:block; margin-top:8px;">unzip plugin.zip -d "[VaultPath]/.obsidian/plugins/"</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOOKS -->
+<section id="section-3">
+  <div class="container">
+    <div class="section-label">Step 03 — Hooks</div>
+    <h2>Three hooks<br>Ready to copy</h2>
+    <p class="lead">Hooks are triggers that fire automatically when you type a specific phrase. Install them in Kiro under Settings → Hooks. Copy the prompt text exactly.</p>
+  </div>
+
+  <div class="hooks-stack">
+
+    <div class="hook-card">
+      <div class="hook-header">
+        <div>
+          <div class="hook-trigger">Trigger: "good morning" / "morning" / "gm"</div>
+          <div class="hook-title">Morning Briefing</div>
+        </div>
+        <div class="hook-number">Hook 01</div>
+      </div>
+      <p class="hook-desc">Pulls today's calendar, unread email, Slack mentions, and your weekly focus file. Delivers a prioritized briefing: flags that can't slip, schedule with context, email requiring action, and this week's priorities. Saves automatically to a dated file.</p>
+      <button class="hook-toggle" onclick="toggleHook(this)">
+        <span>↓</span> Show hook code
+      </button>
+      <div class="hook-code">
+        <pre>"name": "Morning Briefing"
+"when": type = promptSubmit
+
+"prompt": Check if the user's message is a morning greeting
+(e.g. 'good morning', 'morning', 'gm').
+
+If it IS: pull today's calendar, check unread email (top 10),
+check Slack mentions, read your Weekly-Focus file, and deliver
+a briefing covering:
+— Top flags that can't slip today
+— Today's schedule with context on each meeting
+— Email that requires action
+— Slack mentions
+— This week's priorities
+
+Save the briefing to a dated file.
+
+If the message is NOT a morning greeting, do nothing.</pre>
+      </div>
+      <p class="hook-what">What this gives you: clarity about your day before anyone else has shaped it for you.</p>
+    </div>
+
+    <div class="hook-card">
+      <div class="hook-header">
+        <div>
+          <div class="hook-trigger">Trigger: "prep me for my 1:1 with [name]"</div>
+          <div class="hook-title">Rep & Team Coaching Prep</div>
+        </div>
+        <div class="hook-number">Hook 02</div>
+      </div>
+      <p class="hook-desc">Pulls pipeline or performance data, surfaces the pattern across recent conversations with that person, flags any commitments you made that you haven't followed through on, gives you the right questions to ask — and tells you what this conversation probably is before you walk in.</p>
+      <button class="hook-toggle" onclick="toggleHook(this)">
+        <span>↓</span> Show hook code
+      </button>
+      <div class="hook-code">
+        <pre>"name": "Coaching Prep"
+"when": type = promptSubmit
+
+"prompt": Check if the user is asking to prep for a 1:1
+or coaching conversation with someone.
+
+If yes: pull their pipeline or performance data, surface
+the pattern across recent conversations with them, flag any
+commitments you made that you haven't followed through on,
+give the coaching questions to ask (not a script — the right
+questions), and tell the user what this conversation probably
+is.
+
+If the message is not a prep request, do nothing.</pre>
+      </div>
+      <p class="hook-what">What this gives you: clarity about your people — including what you promised and forgot.</p>
+    </div>
+
+    <div class="hook-card">
+      <div class="hook-header">
+        <div>
+          <div class="hook-trigger">Trigger: "prep me for [meeting / account name]"</div>
+          <div class="hook-title">Executive Meeting Prep</div>
+        </div>
+        <div class="hook-number">Hook 03</div>
+      </div>
+      <p class="hook-desc">Pulls what was committed last time and whether it was delivered. Surfaces what's changed since the last conversation. Anticipates the hard questions. Tells you what you want to walk out with — and what not to do. Works for customer calls, stakeholder meetings, and ambush conversations with direct reports.</p>
+      <button class="hook-toggle" onclick="toggleHook(this)">
+        <span>↓</span> Show hook code
+      </button>
+      <div class="hook-code">
+        <pre>"name": "Executive Meeting Prep"
+"when": type = promptSubmit
+
+"prompt": Check if the user is asking to prep for a customer
+or stakeholder meeting.
+
+If yes: pull what was committed last time and whether it was
+delivered, surface what's changed since the last conversation,
+anticipate the hard questions, tell the user what they want
+to walk out with, and tell them what not to do.
+
+If the message is not a meeting prep request, do nothing.</pre>
+      </div>
+      <p class="hook-what">What this gives you: clarity about your deals — including exactly where to stop talking.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FORM -->
+<div class="form-section" id="section-5">
+  <div class="container">
+    <div class="section-label">After your three hours</div>
+    <h2>Tell me how it went</h2>
+    <p class="lead">I'd love to hear what came up — a realization, a question, something that surprised you, or just how it's working. Send me a note.</p>
+
+    <div class="form-inner">
+      <div id="contact-form">
+        <div class="field">
+          <label>Your name</label>
+          <input type="text" id="fname" placeholder="First and last name">
+        </div>
+        <div class="field">
+          <label>Your email</label>
+          <input type="email" id="femail" placeholder="Work email">
+        </div>
+        <div class="field">
+          <label>What came up that surprised you?</label>
+          <textarea id="fmessage" placeholder="It can be one sentence. It can be a paragraph. Whatever feels right."></textarea>
+        </div>
+        <button class="submit-btn" onclick="handleSubmit()">Send it →</button>
+      </div>
+      <div class="form-success" id="form-success">
+        <p>Thank you. This is exactly the kind of thing worth sharing.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-note">Built for leaders who do the work.</span>
+  <span class="footer-note">Quick Desktop · Kiro · Obsidian</span>
+</footer>
+
+<script>
+  // SCROLL ANIMATIONS
+  const sections = document.querySelectorAll('section, .question-block, .form-section');
+  const navDots = document.querySelectorAll('.nav-dot');
+  const allSections = document.querySelectorAll('[id^="section-"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // NAV DOT ACTIVE STATE
+  const dotObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        const index = parseInt(id.replace('section-', ''));
+        navDots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+
+  allSections.forEach(s => dotObserver.observe(s));
+
+  function scrollToSection(index) {
+    const el = document.getElementById('section-' + index);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // HOOK TOGGLES
+  function toggleHook(btn) {
+    const card = btn.closest('.hook-card');
+    const code = card.querySelector('.hook-code');
+    const span = btn.querySelector('span');
+    const isExpanded = code.classList.toggle('expanded');
+    span.textContent = isExpanded ? '↑' : '↓';
+    btn.innerHTML = btn.innerHTML.replace(
+      isExpanded ? 'Show hook code' : 'Hide hook code',
+      isExpanded ? 'Hide hook code' : 'Show hook code'
+    );
+  }
+
+  // FORM
+  function handleSubmit() {
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const message = document.getElementById('fmessage').value.trim();
+
+    if (!name || !email || !message) {
+      alert('Please fill in all three fields.');
+      return;
+    }
+
+    // Store submission
+    const submission = { name, email, message, timestamp: new Date().toISOString() };
+    const existing = JSON.parse(localStorage.getItem('sb_submissions') || '[]');
+    existing.push(submission);
+    localStorage.setItem('sb_submissions', JSON.stringify(existing));
+
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
