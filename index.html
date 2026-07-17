@@ -691,8 +691,6 @@
   <button class="nav-dot" onclick="scrollToSection(2)" aria-label="Context files"></button>
   <button class="nav-dot" onclick="scrollToSection(3)" aria-label="Skills"></button>
   <button class="nav-dot" onclick="scrollToSection(4)" aria-label="Setup"></button>
-  <button class="nav-dot" onclick="scrollToSection(5)" aria-label="Share"></button>
-  <button class="nav-dot" onclick="scrollToSection(6)" aria-label="Form"></button>
 </nav>
 
 <!-- HERO -->
@@ -931,7 +929,6 @@ to your role]</pre>
         <div class="tool-role">Intelligence layer</div>
         <div class="tool-name">Quick Desktop</div>
         <p class="tool-desc">Where you talk to the system. Reads your context files. Connects to your tools. Start here.</p>
-        <p class="tool-note">Recommended for most users</p>
       </div>
       <div class="tool-card">
         <div class="tool-role">Memory layer</div>
@@ -961,7 +958,7 @@ to your role]</pre>
           <li>Test it: ask "what's on my calendar today?" — if it knows, you're connected</li>
         </ol>
         <div class="setup-warning">
-          Quick Desktop is the recommended starting point. If you hit a blocker at any step, use the feedback form at the bottom of this page.
+          Quick Desktop is the recommended starting point. If you hit a blocker at any step, work through it one step at a time — each connection is independent.
         </div>
         <div class="setup-warning" style="margin-top:16px;">
           Desktop app requires a Quick Plus or Enterprise account; free accounts can try it for 30 days. macOS requires Apple Silicon.
@@ -1067,37 +1064,6 @@ to walk out with, and tell them what not to do.</pre>
   </div>
 </section>
 
-<!-- FORM -->
-<div class="form-section" id="section-5">
-  <div class="container">
-    <div class="section-label">After your three hours</div>
-    <h2>Tell me how it went</h2>
-    <p class="lead">I'd love to hear what came up — a realization, a question, something that surprised you, or just how it's working. Send me a note.</p>
-
-    <div class="form-inner">
-      <form id="contact-form" action="https://formspree.io/f/xdabyoyr" method="POST">
-        <input type="hidden" name="_subject" value="Second Brain — new submission">
-        <div class="field">
-          <label>Your name</label>
-          <input type="text" name="name" placeholder="First and last name" required>
-        </div>
-        <div class="field">
-          <label>Your email</label>
-          <input type="email" name="email" placeholder="Work email" required>
-        </div>
-        <div class="field">
-          <label>How did it go?</label>
-          <textarea name="message" placeholder="It can be one sentence. It can be a paragraph. Whatever feels right." required></textarea>
-        </div>
-        <button type="submit" class="submit-btn">Send it →</button>
-      </form>
-      <div class="form-success" id="form-success">
-        <p>Thank you. This is exactly the kind of thing worth sharing.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- FOOTER -->
 <footer>
   <span class="footer-note">Built for leaders who do the work.</span>
@@ -1151,17 +1117,6 @@ to walk out with, and tell them what not to do.</pre>
       isExpanded ? 'Show hook code' : 'Hide hook code',
       isExpanded ? 'Hide hook code' : 'Show hook code'
     );
-  }
-
-  // FORM
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', function() {
-      setTimeout(function() {
-        form.style.display = 'none';
-        document.getElementById('form-success').style.display = 'block';
-      }, 1000);
-    });
   }
 </script>
 
