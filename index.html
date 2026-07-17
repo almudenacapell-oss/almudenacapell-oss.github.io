@@ -444,7 +444,7 @@
   /* TOOLS */
   .tools-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 0;
     border: 1px solid var(--rule);
     margin-bottom: 48px;
@@ -689,7 +689,7 @@
   <button class="nav-dot active" onclick="scrollToSection(0)" aria-label="Top"></button>
   <button class="nav-dot" onclick="scrollToSection(1)" aria-label="Start"></button>
   <button class="nav-dot" onclick="scrollToSection(2)" aria-label="Context files"></button>
-  <button class="nav-dot" onclick="scrollToSection(3)" aria-label="Hooks"></button>
+  <button class="nav-dot" onclick="scrollToSection(3)" aria-label="Skills"></button>
   <button class="nav-dot" onclick="scrollToSection(4)" aria-label="Setup"></button>
   <button class="nav-dot" onclick="scrollToSection(5)" aria-label="Share"></button>
   <button class="nav-dot" onclick="scrollToSection(6)" aria-label="Form"></button>
@@ -726,13 +726,13 @@
       <div class="step">
         <span class="step-number">02</span>
         <h3>Install your tools</h3>
-        <p>Quick Desktop is where most of you will start — it's straightforward and connects to your existing tools. Kiro is the alternative for those who want to go deeper. Instructions for both are below.</p>
+        <p>Quick Desktop is where most of you will start — it's straightforward and connects to your existing tools. Instructions are below.</p>
         <div class="step-duration">~30 min · Quick Desktop recommended</div>
       </div>
       <div class="step">
         <span class="step-number">03</span>
-        <h3>Install your hooks</h3>
-        <p>Hooks are triggers that fire automatically. Three are ready to copy below — morning briefing, rep coaching prep, and executive meeting prep. Start with one. The morning briefing is the one that changes your day fastest.</p>
+        <h3>Install your skills</h3>
+        <p>Skills are workflows you save once and reuse. Three are ready to copy below — morning briefing, rep coaching prep, and executive meeting prep. Start with one. The morning briefing is the one that changes your day fastest.</p>
         <div class="step-duration">~15 min · Copy and paste ready</div>
       </div>
     </div>
@@ -872,12 +872,12 @@
       <div class="step" style="border-right:none;">
         <span class="step-number">The template</span>
         <h3>Copy and customize</h3>
-        <p>Create a file called <code style="font-family:'DM Mono',monospace; font-size:13px; background:var(--highlight); padding:2px 6px;">steering.md</code> in Kiro or Quick Desktop. Paste the base template below. Edit the sections marked CUSTOMIZE before you start using it.</p>
+        <p>Create a file called <code style="font-family:'DM Mono',monospace; font-size:13px; background:var(--highlight); padding:2px 6px;">steering.md</code> in Quick Desktop. Paste the base template below. Edit the sections marked CUSTOMIZE before you start using it.</p>
         <div style="background:var(--code-bg); color:var(--code-text); padding:24px; margin-top:24px; border-radius:2px;">
           <pre style="font-family:'DM Mono',monospace; font-size:12px; line-height:1.8; white-space:pre-wrap; color:rgba(232,228,220,0.8);"># Steering File
 
 ## Who I Am
-I am a senior sales leader at AWS. I run a large org
+I am a senior leader at [your company]. I run a large org
 with significant quota responsibility. I operate in a
 matrixed environment with high political complexity.
 My time is predominantly meetings. My solo work
@@ -890,7 +890,7 @@ Default to my email register: direct, point-first,
 no preamble, ends with a concrete ask or next step.
 Never use hyperbole or filler transitions.
 Never hedge. Use active verbs.
-Write like a senior AWS leader, not a consultant.
+Write like a senior operator, not a consultant.
 [CUSTOMIZE: load your writer-profile and add
 2 rules specific to how you write]
 
@@ -934,12 +934,6 @@ to your role]</pre>
         <p class="tool-note">Recommended for most users</p>
       </div>
       <div class="tool-card">
-        <div class="tool-role">Intelligence layer (alternative)</div>
-        <div class="tool-name">Kiro</div>
-        <p class="tool-desc">More powerful. Supports hooks natively. Better for those who want to go deeper. kiro.dev</p>
-        <p class="tool-note">For the more technically inclined</p>
-      </div>
-      <div class="tool-card">
         <div class="tool-role">Memory layer</div>
         <div class="tool-name">Obsidian</div>
         <p class="tool-desc">Where everything lives. Every briefing, meeting note, and context file. Gets smarter every day. obsidian.md</p>
@@ -959,51 +953,29 @@ to your role]</pre>
       <div class="setup-card">
         <h3>Quick Desktop setup</h3>
         <ol class="setup-steps">
-          <li>Download and install Quick Desktop from <a href="https://aws-quick-work.harmony.a2z.com/" style="color:var(--accent);">aws-quick-work.harmony.a2z.com</a></li>
-          <li>Open Quick Desktop and sign in with your work credentials</li>
-          <li>Go to Settings → Integrations and connect your email (Outlook)</li>
-          <li>Connect your calendar</li>
-          <li>Connect Teams</li>
+          <li>Download and install Quick Desktop from <a href="https://aws.amazon.com/quick/download/" style="color:var(--accent);">aws.amazon.com/quick/download</a></li>
+          <li>Open Quick Desktop and sign in with your email — no AWS account required</li>
+          <li>Go to Settings → Integrations and connect your email and calendar (Google Workspace or Microsoft 365)</li>
+          <li>Connect your chat tool</li>
           <li>Load your three context files: drag and drop them into the context panel or paste the contents directly</li>
           <li>Test it: ask "what's on my calendar today?" — if it knows, you're connected</li>
         </ol>
         <div class="setup-warning">
           Quick Desktop is the recommended starting point. If you hit a blocker at any step, use the feedback form at the bottom of this page.
         </div>
+        <div class="setup-warning" style="margin-top:16px;">
+          Desktop app requires a Quick Plus or Enterprise account; free accounts can try it for 30 days. macOS requires Apple Silicon.
+        </div>
       </div>
 
       <div class="setup-card">
-        <h3>Kiro setup (alternative)</h3>
-        <ol class="setup-steps">
-          <li>Download and install Kiro from <a href="https://kiro.dev" style="color:var(--accent);">kiro.dev</a></li>
-          <li>Configure MCP connector: email (Outlook) — 10 min</li>
-          <li>Configure MCP connector: calendar — 5 min</li>
-          <li>Configure MCP connector: Slack — 5 min (note: Slack MCP on Windows can be complex — allow extra time)</li>
-          <li>Run one test prompt: ask Kiro to summarize your last 5 emails</li>
-          <li>Load your context files from your Obsidian vault</li>
-          <li>Install your hooks under Settings → Hooks using the code above</li>
-        </ol>
-        <div class="setup-warning">
-          Windows users: the Slack MCP connector takes longer. Plan for 45 minutes total. If you hit a blocker, use Quick Desktop instead.
-        </div>
-      </div>
-
-      <div class="setup-card" style="grid-column: 1 / -1;">
         <h3>Obsidian setup</h3>
         <ol class="setup-steps">
           <li>Download and install Obsidian from <a href="https://obsidian.md/download" style="color:var(--accent);">obsidian.md/download</a> — available for macOS, Windows, and Linux</li>
-          <li>Create your vault inside your personal OneDrive folder for automatic backup and cross-device access</li>
-          <li>Mac path: <code style="font-family:'Courier New',monospace; font-size:12px; background:var(--highlight); padding:2px 6px;">~/Library/CloudStorage/OneDrive-amazon.com/Obsidian/[your-alias]/</code></li>
-          <li>Windows: adjust the path to your OneDrive sync location accordingly</li>
+          <li>Create your vault inside any cloud-synced folder (Dropbox, Google Drive, iCloud, OneDrive) for automatic backup and cross-device access</li>
+          <li>Point the vault at your synced folder — for example a path like <code style="font-family:'Courier New',monospace; font-size:12px; background:var(--highlight); padding:2px 6px;">~/[your-cloud-folder]/Obsidian/</code></li>
           <li>Name the vault whatever you want. Do not create any folders inside it yet — your AI tool will build the structure for you</li>
         </ol>
-        <div class="setup-warning" style="margin-top:24px;">
-          <strong>Optional: Amazon Plugin Marketplace for Obsidian</strong><br><br>
-          1. Run <code style="font-family:'Courier New',monospace; font-size:12px;">mwinit -o</code> in your terminal (Midway authentication required)<br>
-          2. Download the plugin.zip from Code Browser<br>
-          3. Unzip into your vault's plugins directory:<br>
-          <code style="font-family:'Courier New',monospace; font-size:12px; display:block; margin-top:8px;">unzip plugin.zip -d "[VaultPath]/.obsidian/plugins/"</code>
-        </div>
       </div>
     </div>
   </div>
@@ -1012,9 +984,9 @@ to your role]</pre>
 <!-- HOOKS -->
 <section id="section-3">
   <div class="container">
-    <div class="section-label">Step 03 — Hooks</div>
-    <h2>Three hooks<br>Ready to copy</h2>
-    <p class="lead">Hooks are triggers that fire automatically when you type a specific phrase. Install them in Kiro under Settings → Hooks. Copy the prompt text exactly.</p>
+    <div class="section-label">Step 03 — Skills</div>
+    <h2>Three skills<br>Ready to copy</h2>
+    <p class="lead">These are workflows you save as skills in Quick Desktop. Once saved, you invoke each one by name or by typing its trigger phrase. Copy the prompt text exactly.</p>
   </div>
 
   <div class="hooks-stack">
@@ -1032,13 +1004,7 @@ to your role]</pre>
         <span>↓</span> Show hook code
       </button>
       <div class="hook-code">
-        <pre>"name": "Morning Briefing"
-"when": type = promptSubmit
-
-"prompt": Check if the user's message is a morning greeting
-(e.g. 'good morning', 'morning', 'gm').
-
-If it IS: pull today's calendar, check unread email (top 10),
+        <pre>Pull today's calendar, check unread email (top 10),
 check Slack mentions, read your Weekly-Focus file, and deliver
 a briefing covering:
 — Top flags that can't slip today
@@ -1047,11 +1013,9 @@ a briefing covering:
 — Slack mentions
 — This week's priorities
 
-Save the briefing to a dated file.
-
-If the message is NOT a morning greeting, do nothing.</pre>
+Save the briefing to a dated file.</pre>
       </div>
-      <p class="hook-what">What this gives you: clarity about your day before anyone else has shaped it for you.</p>
+      <p class="hook-what">What this gives you: clarity about your day before anyone else has shaped it for you. This one can also run as a scheduled agent, so the briefing is waiting for you before you ask.</p>
     </div>
 
     <div class="hook-card">
@@ -1067,20 +1031,13 @@ If the message is NOT a morning greeting, do nothing.</pre>
         <span>↓</span> Show hook code
       </button>
       <div class="hook-code">
-        <pre>"name": "Coaching Prep"
-"when": type = promptSubmit
-
-"prompt": Check if the user is asking to prep for a 1:1
-or coaching conversation with someone.
-
-If yes: pull their pipeline or performance data, surface
+        <pre>When prepping for a 1:1 or coaching conversation with
+someone: pull their pipeline or performance data, surface
 the pattern across recent conversations with them, flag any
 commitments you made that you haven't followed through on,
 give the coaching questions to ask (not a script — the right
 questions), and tell the user what this conversation probably
-is.
-
-If the message is not a prep request, do nothing.</pre>
+is.</pre>
       </div>
       <p class="hook-what">What this gives you: clarity about your people — including what you promised and forgot.</p>
     </div>
@@ -1098,18 +1055,11 @@ If the message is not a prep request, do nothing.</pre>
         <span>↓</span> Show hook code
       </button>
       <div class="hook-code">
-        <pre>"name": "Executive Meeting Prep"
-"when": type = promptSubmit
-
-"prompt": Check if the user is asking to prep for a customer
-or stakeholder meeting.
-
-If yes: pull what was committed last time and whether it was
+        <pre>When prepping for a customer or stakeholder meeting:
+pull what was committed last time and whether it was
 delivered, surface what's changed since the last conversation,
 anticipate the hard questions, tell the user what they want
-to walk out with, and tell them what not to do.
-
-If the message is not a meeting prep request, do nothing.</pre>
+to walk out with, and tell them what not to do.</pre>
       </div>
       <p class="hook-what">What this gives you: clarity about your deals — including exactly where to stop talking.</p>
     </div>
@@ -1151,7 +1101,7 @@ If the message is not a meeting prep request, do nothing.</pre>
 <!-- FOOTER -->
 <footer>
   <span class="footer-note">Built for leaders who do the work.</span>
-  <span class="footer-note">Quick Desktop · Kiro · Obsidian</span>
+  <span class="footer-note">Quick Desktop · Obsidian</span>
 </footer>
 
 <script>
